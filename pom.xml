@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.vertx.cryptobuyer</groupId>
+  <artifactId>crypto-buyer</artifactId>
+  <packaging>pom</packaging>
+  <version>${revision}</version>
+
+
+  <modules>
+    <module>domain</module>
+    <module>public-models</module>
+    <module>application</module>
+  </modules>
+
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <revision>1.0.0-SNAPSHOT</revision>
+    <cmd-skeleton.version>1.0.0-SNAPSHOT</cmd-skeleton.version>
+    <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+    <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+    <flatten.maven.plugin.version>1.1.0</flatten.maven.plugin.version>
+    <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven.gitflow.plugin.version>1.17.0</maven.gitflow.plugin.version>
+    <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.vertx.skeleton</groupId>
+        <artifactId>vertx-dependencies</artifactId>
+        <version>${cmd-skeleton.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten.maven.plugin.version}</version>
+        <configuration>
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.6.0.1398</version>
+      </plugin>
+      <plugin>
+        <groupId>com.amashchenko.maven.plugin</groupId>
+        <artifactId>gitflow-maven-plugin</artifactId>
+        <version>${maven.gitflow.plugin.version}</version>
+        <configuration>
+          <verbose>true</verbose>
+          <commitDevelopmentVersionAtStart>true</commitDevelopmentVersionAtStart>
+          <useSnapshotInRelease>true</useSnapshotInRelease>
+          <pushRemote>false</pushRemote>
+          <skipTestProject>true</skipTestProject>
+          <gitFlowConfig>
+            <productionBranch>master_next</productionBranch>
+            <developmentBranch>next</developmentBranch>
+            <featureBranchPrefix>feature_next/</featureBranchPrefix>
+            <releaseBranchPrefix>release_next/</releaseBranchPrefix>
+            <hotfixBranchPrefix>hotfix_next/</hotfixBranchPrefix>
+            <supportBranchPrefix>support_next/</supportBranchPrefix>
+            <versionTagPrefix>${versionTagPrefix}</versionTagPrefix>
+            <origin>origin</origin>
+          </gitFlowConfig>
+          <versionProperty>revision</versionProperty>
+          <skipUpdateVersion>true</skipUpdateVersion>
+          <versionDigitToIncrement>1</versionDigitToIncrement>
+          <commitMessagePrefix xml:space="preserve">[GITFLOW] v@{version} </commitMessagePrefix>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

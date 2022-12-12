@@ -1,0 +1,65 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
+>
+
+  <!-- ACCOUNTS CHANGE-SETS  -->
+  <changeSet id="accounts-table" author="benato.j" context="postgres">
+    <createSequence sequenceName="accounts_seq" schemaName="postgres"/>
+    <createTable tableName="accounts" schemaName="postgres">
+      <column type="text" name="account_id"/>
+      <column type="numeric" name="balance"/>
+      <!--  Repository Entity    -->
+      <column type="bigint" name="id" defaultValueSequenceNext="accounts_seq"/>
+      <column type="text" name="tenant"/>
+      <column type="timestamp" name="creation_date" defaultValueComputed="current_timestamp"/>
+      <column type="timestamp" name="last_update" defaultValueComputed="current_timestamp"/>
+      <column type="int" name="version" defaultValue="0"/>
+      <!--      -->
+    </createTable>
+  </changeSet>
+  <changeSet id="accounts-index" author="benato.j" context="postgres">
+    <addPrimaryKey tableName="accounts" columnNames="id" schemaName="postgres"/>
+    <addUniqueConstraint tableName="accounts" columnNames="account_id, tenant" schemaName="postgres"/>
+    <createIndex tableName="accounts" indexName="accounts_index" schemaName="postgres">
+      <column name="account_id"/>
+      <column name="tenant"/>
+    </createIndex>
+  </changeSet>
+  <!-- END  -->
+
+
+  <!-- GROUP RELATIONS CHANGE-SETS  -->
+  <changeSet id="orders-table" author="benato.j" context="postgres">
+    <createSequence sequenceName="orders_seq" schemaName="postgres"/>
+    <createTable tableName="orders" schemaName="postgres">
+      <column type="text" name="order_id"/>
+      <column type="text" name="account_id"/>
+      <column type="text" name="state"/>
+      <column type="numeric" name="price_limit"/>
+      <column type="numeric" name="amount"/>
+      <!--  Repository Entity    -->
+      <column type="bigint" name="id" defaultValueSequenceNext="orders_seq"/>
+      <column type="text" name="tenant"/>
+      <column type="timestamp" name="creation_date" defaultValueComputed="current_timestamp"/>
+      <column type="timestamp" name="last_update" defaultValueComputed="current_timestamp"/>
+      <column type="int" name="version" defaultValue="0"/>
+      <!--      -->
+    </createTable>
+  </changeSet>
+  <changeSet id="orders-index" author="benato.j" context="postgres">
+    <addPrimaryKey tableName="orders" columnNames="id" schemaName="postgres"/>
+    <addUniqueConstraint tableName="orders" columnNames="order_id, tenant" schemaName="postgres"/>
+    <createIndex tableName="orders" indexName="orders_index" schemaName="postgres">
+      <column name="account_id"/>
+      <column name="order_id"/>
+    </createIndex>
+  </changeSet>
+  <!-- END  -->
+
+  <changeSet author="benato.j" id="1.0.0-SNAPSHOT-TAG">
+    <tagDatabase tag="1.0.0-SNAPSHOT"/>
+  </changeSet>
+</databaseChangeLog>

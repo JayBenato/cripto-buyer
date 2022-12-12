@@ -1,0 +1,122 @@
+---
+openapi: 3.0.3
+info:
+  title: User Group API
+  version: "1.0"
+paths:
+  /account:
+    post:
+      operationId: create-account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+  /order:
+    get:
+      operationId: query-order
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountOrdersQuery'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountOrdersQuery'
+      responses:
+        "201": {}
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      operationId: create-order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderCommand'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountId:
+          type: string
+        balance:
+          format: int64
+          type: integer
+    AccountOrdersQuery:
+      type: object
+      properties:
+        orderId:
+          type: array
+          items:
+            type: string
+        accountId:
+          type: array
+          items:
+            type: string
+        limitFrom:
+          format: int64
+          type: integer
+        limitTo:
+          format: int64
+          type: integer
+    CreateOrderCommand:
+      type: object
+      properties:
+        accountId:
+          type: string
+        priceLimit:
+          format: int64
+          type: integer
+        amount:
+          format: int64
+          type: integer
+        state:
+          $ref: '#/components/schemas/OrderState'
+    OrderState:
+      enum:
+      - CREATED
+      - PROCESSED
+      - WAITING_FOR_PRICE_LIMIT
+      type: string

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.vertx.cryptobuyer</groupId>
+        <artifactId>crypto-buyer</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>public-models</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>io.vertx.skeleton</groupId>
+      <artifactId>vertx-models</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.smallrye</groupId>
+      <artifactId>smallrye-open-api-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.smallrye</groupId>
+      <artifactId>smallrye-open-api-jaxrs</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.smallrye</groupId>
+        <artifactId>smallrye-open-api-maven-plugin</artifactId>
+        <version>2.1.17</version>
+
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-schema</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <infoTitle>User Group API</infoTitle>
+          <outputDirectory>../application/src/main/resources/</outputDirectory>
+          <includeDependenciesScopes>compile,provided,system,test,import</includeDependenciesScopes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
