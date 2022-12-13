@@ -2,9 +2,6 @@ package io.vertx.criptobuyer;
 
 import io.activej.inject.annotation.Inject;
 import io.activej.inject.annotation.Provides;
-import io.vertx.criptobuyer.handlers.DefaultPriceProvider;
-import io.vertx.criptobuyer.handlers.OrderGeneratorTask;
-import io.vertx.criptobuyer.handlers.PriceProviderTask;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.web.client.WebClient;
@@ -14,11 +11,11 @@ public class Tasks extends VertxComponent {
 
   @Provides
   @Inject
-  PriceProviderTask providerTask(
+  BtcExchangePriceProvider providerTask(
     Vertx vertx,
     WebClient webClient
   ) {
-    return new PriceProviderTask(vertx, new DefaultPriceProvider(webClient));
+    return new BtcExchangePriceProvider(vertx, new DefaultPriceProvider(webClient));
   }
 
   @Provides

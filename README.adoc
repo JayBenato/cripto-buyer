@@ -1,0 +1,71 @@
+= cripto-buyer
+
+Framework
+
+  This was written using a little framework i wrote sometimeago, the framework's goal was to unify and speedup the writting process of vert.x apps. App bootstrapping works with classpathscanning (once) where it looks for any class extending VertxComponent in which it expects to find beans annotate with @Provides and @Inject.
+  Modules as built from the classpathscan result and passed to each verticle being deployed each verticle will have it's isolated context thus preventing cross eventloop resource sharing.
+
+   -> https://github.com/JayBenato/vertx-skeleton
+
+
+
+File Structure
+
+  application : Contains all the bootstrapping necessary to run the app
+
+  infrastructure : Contains all the code that is used to glue various pieces of the architecture tog. stuff like repositories and messaging infra.
+
+  models : all the models and interfaces used in the app.
+
+  domain : it's not present cause there's nearly no domain specific logic in the challange, but should contain all the business rules.
+
+
+Order Flow
+
+  PriceProviderTask.class : Recursive task fetches prices from source and publishes current-price to the eventbus, im aware of the fact that ev-bus delivers messages with best effort semantics but for a prototype should be fine.
+
+  BtcPriceConsumer.class : N consumers will receive the published message and concurrently convert matching order's (orders that are within the price limit) to messages in the order processing queue and in the process change the to PROCESSING. The idea is to orders into queue messages as fast as possible.
+
+  Possible Problems :
+  - up-stream publisher may overload consumer's since there's no backpressure mechanism in place (besides the max message buff on vert.x)
+  - node dying before submitting, new messages to the processing queue, in a real scenario a recovery mechanism should be implemented leveraging that fact that the downstream consumer is idempotent.
+
+  Possible Improvements :
+  - isolate non-handled order's in a different table in order to maintain table size stable
+  - change order's read flow by making use of a document indexer, something like lucene
+  - change order's write flow by using a data-grid infrastructure configured with write-behind strategy
+
+
+
+
+  OrderProcessor.class : Order's in the processing queue will update the order state to PROCESSED. Consumers in the queue are idempotent. The queue is implemented in postgresql via a library i wrote sometime ago vertx-ccp (Competing Consumers Pattern) but could potentially be implemented ontop of any message broker.
+
+
+
+Requirements
+
+  Postgreql Container
+  username : postgres
+  password : postgres
+  port : 5432
+
+
+Create Account
+
+  $curl --location --request POST 'http://localhost:8080/account' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "accountId": "tes123t_ea7183e180b3",
+  "balance": 5000.00
+  }'
+
+
+Create Order
+
+  $curl --location --request POST 'http://localhost:8080/order' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "accountId": "tes123t_ea7183e180b3",
+  "priceLimit": 3000.00,
+  "amount": 3000.00
+  }'

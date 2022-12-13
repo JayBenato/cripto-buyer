@@ -30,7 +30,7 @@
         </dependency>
       <dependency>
         <groupId>io.vertx.cryptobuyer</groupId>
-        <artifactId>domain</artifactId>
+        <artifactId>infrastructure</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
@@ -140,7 +140,6 @@
                         <args>
                             <arg>run</arg>
                             <arg>${main.verticle}</arg>
-                            <arg>-clustered</arg>
                         </args>
                         <ports>
                             <port>8080</port>

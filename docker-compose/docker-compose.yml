@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  crypto-exchange:
+    container_name: crypto-exchange
+    build: .
+    ports:
+      - "5000:5000"
+  database:
+    container_name: database
+    pull_policy: always
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  crypto-buyer:
+    container_name: crypto-buyer
+    pull_policy: never
+    image: crypto-buyer:latest
+    depends_on:
+      - database
+      - crypto-exchange
+    ports:
+      - "8080:8080"
+    environment:
+      - PG_HOST=database
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DATABASE=postgres
+      - PG_PORT=5432
+      - EXCHANGE_HOST=crypto-exchange

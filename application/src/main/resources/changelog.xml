@@ -11,6 +11,7 @@
     <createTable tableName="accounts" schemaName="postgres">
       <column type="text" name="account_id"/>
       <column type="numeric" name="balance"/>
+      <column type="numeric" name="reserved_amount"/>
       <!--  Repository Entity    -->
       <column type="bigint" name="id" defaultValueSequenceNext="accounts_seq"/>
       <column type="text" name="tenant"/>
@@ -39,7 +40,7 @@
       <column type="text" name="account_id"/>
       <column type="text" name="state"/>
       <column type="numeric" name="price_limit"/>
-      <column type="numeric" name="amount"/>
+      <column type="int" name="amount"/>
       <!--  Repository Entity    -->
       <column type="bigint" name="id" defaultValueSequenceNext="orders_seq"/>
       <column type="text" name="tenant"/>

@@ -11,8 +11,8 @@
 
 
   <modules>
+    <module>infrastructure</module>
     <module>domain</module>
-    <module>public-models</module>
     <module>application</module>
   </modules>
 
