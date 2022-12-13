@@ -15,7 +15,15 @@ File Structure
 
   domain : Where domain models and all business rules are located
 
-Order Flow
+Account Creation FLow
+
+  DefaultAccountService.class : where account's are created
+
+Order Creation Flow
+
+  DefaultOrderService.class : where order's are issued
+
+Order Processing Flow
 
   BtcExchangePriceProvider.class : Recursive task fetches prices from source and publishes current-price to the eventbus, im aware of the fact that ev-bus delivers messages with best effort semantics but for a prototype should be fine.
 
