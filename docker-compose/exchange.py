@@ -19,7 +19,7 @@ def generate_data():
     return my_data
 
 class Exchange(Resource):
-    
+
     def __init__(self):
         self.data = generate_data()
         self.index = 0
@@ -35,4 +35,4 @@ class Exchange(Resource):
 app = Flask(__name__)
 api = Api(app)
 api.add_resource(Exchange, "/btc-price")
-app.run(debug=True)
+app.run(debug=True, host='0.0.0.0', port=5000)

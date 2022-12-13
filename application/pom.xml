@@ -33,6 +33,11 @@
         <artifactId>infrastructure</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>io.vertx.cryptobuyer</groupId>
+        <artifactId>domain</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+      </dependency>
     </dependencies>
 
     <build>

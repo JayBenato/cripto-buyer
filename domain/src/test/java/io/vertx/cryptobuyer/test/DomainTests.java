@@ -1,11 +1,11 @@
 package io.vertx.cryptobuyer.test;
 
-import io.vertx.criptobuyer.commands.PurchaseBtcCommand;
-import io.vertx.criptobuyer.commands.CreateAccountCommand;
-import io.vertx.criptobuyer.commands.CreateOrderCommand;
-import io.vertx.criptobuyer.errors.InsufficientBalanceException;
-import io.vertx.criptobuyer.entities.Account;
-import io.vertx.criptobuyer.entities.Order;
+import io.vertx.cryptobuyer.commands.PurchaseBtcCommand;
+import io.vertx.cryptobuyer.commands.CreateAccountCommand;
+import io.vertx.cryptobuyer.commands.CreateOrderCommand;
+import io.vertx.cryptobuyer.errors.InsufficientBalanceException;
+import io.vertx.cryptobuyer.entities.Account;
+import io.vertx.cryptobuyer.entities.Order;
 import io.vertx.junit5.VertxExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

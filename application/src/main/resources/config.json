@@ -1,10 +1,6 @@
 {
   "schema" : "postgres",
-
-  "PriceProviderTask" : {
-    "backOff" : 1000
-  },
-  "OrderGenerator" : {
-    "backOff" : 1000
+  "BtcExchangePriceProvider" : {
+    "backOff" : 2000
   }
 }

@@ -1,6 +1,9 @@
-FROM python:3.8-slim-buster
-WORKDIR /python-docker
-COPY requirements.txt requirements.txt
+FROM python:latest
+COPY ./requirements.txt /app/requirements.txt
+COPY ./exchange.py /app/exchange.py
+WORKDIR /app
 RUN pip3 install -r requirements.txt
-COPY exchange.py ./
-CMD [ "python3", "./exchange.py"]
+COPY . /app
+EXPOSE 5000
+ENTRYPOINT [ "python3" ]
+CMD ["exchange.py" ]

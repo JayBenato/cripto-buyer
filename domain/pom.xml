@@ -34,26 +34,4 @@
       <artifactId>vertx-test</artifactId>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>io.smallrye</groupId>
-        <artifactId>smallrye-open-api-maven-plugin</artifactId>
-        <version>2.1.17</version>
-
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate-schema</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <infoTitle>User Group API</infoTitle>
-          <outputDirectory>../application/src/main/resources/</outputDirectory>
-          <includeDependenciesScopes>compile,provided,system,test,import</includeDependenciesScopes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
