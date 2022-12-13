@@ -69,7 +69,7 @@ Create Account
   --header 'Content-Type: application/json' \
   --data-raw '{
   "accountId": "tes123t_ea7183e180b3",
-  "balance": 5000.00
+  "initialBalance": 5000.00
   }'
 
 Create Order
